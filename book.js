@@ -4,18 +4,30 @@ const myLibrary = [book1, book2];
 const libraryTableRow = document.getElementById('third-row');
 const addBookBtn = document.getElementById('add-book');
 const favDialog = document.getElementById('favDialog');
+const jsCloseBtn = document.getElementById('js-close');
 displayBooks();
 
-addBookBtn.addEventListener("click", () => {
+addBookBtn.addEventListener("click", (e) => {
     favDialog.showModal();
-    console.log("henlo");
 });
 
-favDialog.addEventListener("close", (e) => {
-    console.log(
-    favDialog.returnValue === "default"
-      ? "No return value."
-      : `ReturnValue: ${favDialog.returnValue}`); // Have to check for "default" rather than empty string
+jsCloseBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    favDialog.close();
+});
+
+favDialog.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const title = favDialog.title.value;
+    const pageCount = favDialog.page_count.value;
+    const author = favDialog.author.value;
+    const isRead = favDialog.is_read.value === "true" ? "Yes" : "No";
+
+    console.log(`Book Details:
+    Title: ${title}
+    Page Count: ${pageCount}
+    Author: ${author}
+    Has Been Read: ${isRead}`);console.log()
 });
 
 
