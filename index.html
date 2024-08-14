@@ -21,26 +21,35 @@
         </div>
         <div class='row' id="second-row">
             <button id="add-book">Add book</button>
-            <dialog id="favDialog">
+            <dialog class="modal" id="favDialog">
                 <form id="book-form">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" >
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="page_count">Page Count:</label>
+                            <input type="number" id="page_count" name="page_count">
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="author">Author:</label>
+                            <input type="text" id="author" name="author">
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="is_read">Has Been Read:</label>
+                            <select id="is_read" name="is_read">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
 
-                <label for="page_count">Page Count:</label>
-                <input type="number" id="page_count" name="page_count">
-
-                <label for="author">Author:</label>
-                <input type="text" id="author" name="author" >
-
-                <label for="is_read">Has Been Read:</label>
-                <select id="is_read" name="is_read" >
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
-
-                <button type="submit">Add Book</button>
-                <button value="cancel"  formmethod="dialog">Cancel</button>
-            </form>
+                    <button type="submit" value="submit">Add Book</button>
+                    <button type="submit" id='js-close' value="JS close">Cancel</button>
+                </form>
             </dialog>
         </div>
         <div class='row' id="third-row">
