@@ -1,6 +1,8 @@
 let book1 = new Book("We were soldiers Once...and Young", 389, 'Harold G. Moore', true);
 let book2 = new Book("The Indifferent Stars Above: The harrowing saga of the donner party", 400, 'Daniel James Brown', false);
-const myLibrary = [book1, book2];
+let book3 = new Book("Sapiens: A Brief History of Humankind", 498, 'Yuval Noah Harari', false);
+let book4 = new Book("Educated: A Memoir", 352, 'Tara Westover', true);
+const myLibrary = [book1, book2, book3, book4];
 const libraryTableRow = document.getElementById('third-row');
 const addBookBtn = document.getElementById('add-book');
 const favDialog = document.getElementById('favDialog');
@@ -59,7 +61,7 @@ function displayBooks() {
     const table = document.createElement('table');
 
     const headerRow = document.createElement("tr");
-    const headers = ["Title", "Page Count", "Author", "Has Been Read"];
+    const headers = ["Title", "Page Count", "Author", "Has Been Read", 'Delete'];
 
     headers.forEach(headerText => {
         const th = document.createElement("th");
@@ -68,7 +70,7 @@ function displayBooks() {
     });
     table.appendChild(headerRow);
 
-    myLibrary.forEach(book => {
+    myLibrary.forEach((book, index) => {
         const row = document.createElement('tr');
         let title = document.createElement('td');
         title.textContent = book.title;
@@ -86,7 +88,22 @@ function displayBooks() {
         isReadCell.textContent = book.is_read ? "Yes" : "No";
         row.appendChild(isReadCell);
 
+        const deleteCell = document.createElement("td");
+        const deleteBtn = document.createElement("button");
+        deleteBtn.setAttribute("type", "submit");
+        deleteBtn.textContent = "Delete";
+        deleteCell.addEventListener("click", (e) => {
+            deleteRow(index);
+        });
+        deleteCell.appendChild(deleteBtn);
+        row.appendChild(deleteCell);
+
         table.appendChild(row);
     })
     libraryTableRow.appendChild(table);
+}
+
+function deleteRow(index){
+    myLibrary.splice(index, 1);
+    displayBooks();
 }
