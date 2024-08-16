@@ -15,7 +15,7 @@ body {
     flex-direction: column;
     border: solid black;
     align-items: center;
-    height: 100vh;
+    height: 100%;
 }
 
 .row {
@@ -120,4 +120,8 @@ select {
 }
 dialog button{
     margin:1em;
+}
+
+#third-row button{
+    
 }
