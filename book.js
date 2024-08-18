@@ -129,4 +129,5 @@ function deleteRow(bookID){
 
     let index = myLibrary.findIndex(book => book.id === bookID);
     myLibrary.splice(index, 1);
+    // testing git rebase
 }
