@@ -1,7 +1,7 @@
-let book1 = new Book("We were soldiers Once...and Young", 389, 'Harold G. Moore', true);
-let book2 = new Book("The Indifferent Stars Above: The harrowing saga of the donner party", 400, 'Daniel James Brown', false);
-let book3 = new Book("Sapiens: A Brief History of Humankind", 498, 'Yuval Noah Harari', false);
-let book4 = new Book("Educated: A Memoir", 352, 'Tara Westover', true);
+let book1 = new Book("We were soldiers Once...and Young", 389, 'Harold G. Moore', 'true');
+let book2 = new Book("The Indifferent Stars Above: The harrowing saga of the donner party", 400, 'Daniel James Brown', 'false');
+let book3 = new Book("Sapiens: A Brief History of Humankind", 498, 'Yuval Noah Harari', 'false');
+let book4 = new Book("Educated: A Memoir", 352, 'Tara Westover', 'true');
 const myLibrary = [book1, book2, book3, book4];
 const libraryTableRow = document.getElementById('third-row');
 const addBookBtn = document.getElementById('add-book');
@@ -98,8 +98,11 @@ function createBookRow(book){
         const isReadCell = document.createElement("td");
         const isReadCheckbox = document.createElement('input');
         isReadCheckbox.type = 'checkbox';
-        console.log(book.is_read);
-        isReadCheckbox.checked = (book.is_read) ? true : false;
+        isReadCheckbox.checked = (book.is_read === 'true') ? true : false;
+        isReadCheckbox.addEventListener("change", (e) => {
+            book.is_read = isReadCheckbox.checked;
+            console.log(book.info());
+        });
         isReadCell.appendChild(isReadCheckbox);
         row.appendChild(isReadCell);
 
@@ -122,6 +125,8 @@ function deleteRow(bookID){
     let element = document.querySelector('[data-attribute="' + String(bookID) + '"]');
     console.log('[data-attribute="' + String(bookID) + '"]')
     console.log(element);
-    //myLibrary.splice(id, 1);
+    element.remove();
 
+    let index = myLibrary.findIndex(book => book.id === bookID);
+    myLibrary.splice(index, 1);
 }
