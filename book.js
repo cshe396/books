@@ -7,6 +7,8 @@ const libraryTableRow = document.getElementById('third-row');
 const addBookBtn = document.getElementById('add-book');
 const favDialog = document.getElementById('favDialog');
 const jsCloseBtn = document.getElementById('js-close');
+const table = document.createElement('table');
+let id = 0;
 displayBooks();
 
 addBookBtn.addEventListener("click", (e) => {
@@ -34,8 +36,9 @@ document.getElementById('book-form').addEventListener('submit', function(event) 
     console.log(`Has Been Read: ${isRead}`);
 
     const newBook = new Book(title, pageCount, author, isRead);
+    bookRow = createBookRow(newBook);
     myLibrary.push(newBook);
-    displayBooks();
+    //displayBooks();
     // Optionally close the dialog
     document.getElementById('favDialog').close();
 });
@@ -46,6 +49,7 @@ function Book(title, page_count, author, is_read) {
     this.page_count = page_count;
     this.author = author;
     this.is_read = is_read;
+    this.id = null;
 
     this.info = function () {
         return this.title + ", by " + this.author + " with " + this.page_count + " pages and has been read: " + this.is_read;
@@ -58,7 +62,6 @@ function addBookToLibrary() {
 
 function displayBooks() {
     libraryTableRow.replaceChildren();
-    const table = document.createElement('table');
 
     const headerRow = document.createElement("tr");
     const headers = ["Title", "Page Count", "Author", "Has Been Read", 'Delete'];
@@ -70,8 +73,16 @@ function displayBooks() {
     });
     table.appendChild(headerRow);
 
-    myLibrary.forEach((book, index) => {
-        const row = document.createElement('tr');
+    myLibrary.forEach((book) => {
+        createBookRow(book);
+    })
+    libraryTableRow.appendChild(table);
+}
+
+function createBookRow(book){
+    book.id = id;
+ const row = document.createElement('tr');
+ row.setAttribute('data-attribute', id);
         let title = document.createElement('td');
         title.textContent = book.title;
         row.appendChild(title);
@@ -85,7 +96,11 @@ function displayBooks() {
         row.appendChild(authorCell);
 
         const isReadCell = document.createElement("td");
-        isReadCell.textContent = book.is_read ? "Yes" : "No";
+        const isReadCheckbox = document.createElement('input');
+        isReadCheckbox.type = 'checkbox';
+        console.log(book.is_read);
+        isReadCheckbox.checked = (book.is_read) ? true : false;
+        isReadCell.appendChild(isReadCheckbox);
         row.appendChild(isReadCell);
 
         const deleteCell = document.createElement("td");
@@ -93,17 +108,20 @@ function displayBooks() {
         deleteBtn.setAttribute("type", "submit");
         deleteBtn.textContent = "Delete";
         deleteCell.addEventListener("click", (e) => {
-            deleteRow(index);
+            deleteRow(book.id);
         });
         deleteCell.appendChild(deleteBtn);
         row.appendChild(deleteCell);
 
-        table.appendChild(row);
-    })
-    libraryTableRow.appendChild(table);
+        table.appendChild(row); 
+        id += 1;
 }
 
-function deleteRow(index){
-    myLibrary.splice(index, 1);
-    displayBooks();
+function deleteRow(bookID){
+    console.log(bookID);
+    let element = document.querySelector('[data-attribute="' + String(bookID) + '"]');
+    console.log('[data-attribute="' + String(bookID) + '"]')
+    console.log(element);
+    //myLibrary.splice(id, 1);
+
 }
